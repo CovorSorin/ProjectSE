@@ -44,6 +44,7 @@ c1.start()
 # app loop
 running = True
 while running:
+
     # exit app
     for event in pygame.event.get():
         if event.type == QUIT:
