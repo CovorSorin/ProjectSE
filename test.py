@@ -22,7 +22,7 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 radius = 15
 
 def car():
-    for delta in range(0, 300, 2):
+    for delta in range(0, 300, 10):
         x = 20 + delta
         y = 20
         position = (x, y)
