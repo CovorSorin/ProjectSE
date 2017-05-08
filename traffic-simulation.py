@@ -13,39 +13,52 @@ def changeLights():
     light1 = not light1
     light2 = not light2
 
-root=tk.Tk()
+root = tk.Tk()
 root.title("Traffic Simulation")
 button = tk.Button(root, text = 'Change Lights', width = 25, command = changeLights)
 button.pack()
 
 # window size
-SIZE = 600
+# lane_width(px) = WIDTH
+WIDTH = 40
+SIZE = 10 * WIDTH
 
 canvas = tk.Canvas(root, width = SIZE, height = SIZE, bg = "#FFE19C")
 canvas.pack()
 
-# generate the map
+# draw the intersection on the screen
+# canvas.create_line(x0, y0, x1, y1, ..., xn, yn, option, ...)
+
+intersection_colors = [
+    (0, 6 * WIDTH, SIZE, WIDTH * 4),
+    (6 * WIDTH, 0, WIDTH * 4, SIZE)
+]
+
+for t in intersection_colors:
+    canvas.create_rectangle(t, fill = "#999999", outline = '#999999')
+
 intersection_data = [
-    (0,200,SIZE,200),
-    (0,300,SIZE,300),
-    (0,400,SIZE,400),
-    (200,0,200,SIZE),
-    (300,0,300,SIZE),
-    (400,0,400,SIZE)
+    (0, 4 * WIDTH, SIZE, 4 * WIDTH),
+    (0, 6 * WIDTH, SIZE, 6 * WIDTH),
+    (4 * WIDTH, 0, 4 * WIDTH, SIZE),
+    (6 * WIDTH, 0, 6 * WIDTH, SIZE)
 ]
 
 for t in intersection_data:
-    # canvas.create_line(x0, y0, x1, y1, ..., xn, yn, option, ...)
     canvas.create_line(t, width = 5)
 
-class Light(Thread, object):
-    def __init__():
-        Thread.__init__(self)
+intersection_lines = [
+    (0, 5 * WIDTH, SIZE, 5 * WIDTH),
+    (5 * WIDTH, 0, 5 * WIDTH, SIZE)
+]
+
+for t in intersection_lines:
+    canvas.create_line(t, width = 5, fill = "White")
 
 class Car(Thread, object):
-    def __init__(self, a,b,c,d, outline='blue', fill='blue'):
+    def __init__(self, a, b, c, d, outline = 'blue', fill = 'blue'):
         Thread.__init__(self)
-        self.rect = canvas.create_rectangle(a,b,c,d, outline=outline, fill=fill)
+        self.rect = canvas.create_rectangle(a, b, c, d, outline = outline, fill = fill)
         self.speed = (0, 0)
     def move(self):
         if(light1):
@@ -53,9 +66,9 @@ class Car(Thread, object):
     def set_speed(self, x, y):
         self.speed = x, y
 
-car1 = Car(100, 100, 105, 105, outline='blue', fill='blue')
+car1 = Car(100, 100, 105, 105, outline = 'blue', fill = 'blue')
 car1.set_speed(5, 0)
-car2 = Car(20, 180, 40, 195, outline='red', fill = 'red')
+car2 = Car(20, 180, 40, 195, outline = 'red', fill = 'red')
 car2.set_speed(3, 0)
 
 # move cars
