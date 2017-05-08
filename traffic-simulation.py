@@ -55,21 +55,36 @@ intersection_lines = [
 for t in intersection_lines:
     canvas.create_line(t, width = 5, fill = "White")
 
+padding = 10
 class Car(Thread, object):
-    def __init__(self, a, b, c, d, outline = 'blue', fill = 'blue'):
+    def __init__(self, spawn, outline = 'blue', fill = 'blue'):
         Thread.__init__(self)
-        self.rect = canvas.create_rectangle(a, b, c, d, outline = outline, fill = fill)
+        pos = self.getPos(spawn)
+        self.rect = canvas.create_rectangle(pos, outline = outline, fill = fill)
         self.speed = (0, 0)
     def move(self):
         if(light1):
             canvas.move(self.rect, self.speed[0], self.speed[1])
     def set_speed(self, x, y):
         self.speed = x, y
+    def getPos(self, spawn):
+        if (spawn == 1):
+            a = 0
+            b = 5 * WIDTH + padding
+            c = WIDTH
+            d = 6 * WIDTH - padding
+            return (a, b, c, d)
+        if (spawn == 2):
+            a = SIZE
+            b = 4 * WIDTH + padding
+            c = 9 * WIDTH
+            d = 5 * WIDTH - padding
+            return (a, b, c, d)
 
-car1 = Car(100, 100, 105, 105, outline = 'blue', fill = 'blue')
+car1 = Car(1, outline = 'blue', fill = 'blue')
 car1.set_speed(5, 0)
-car2 = Car(20, 180, 40, 195, outline = 'red', fill = 'red')
-car2.set_speed(3, 0)
+car2 = Car(2, outline = 'red', fill = 'red')
+car2.set_speed(-5, 0)
 
 # move cars
 for x in range(2000):
