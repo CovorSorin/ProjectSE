@@ -5,15 +5,20 @@ from threading import Thread
 from Tkinter import *
 
 light1 = False
+light2 = True
 
-def changeLight():
+def changeLights():
     global light1
+    global light2
     light1 = not light1
+    light2 = not light2
 
 root=tk.Tk()
 root.title("Traffic Simulation")
-button = tk.Button(root, text='Stop', width=25, command=changeLight)
+button = tk.Button(root, text = 'Change Lights', width = 25, command = changeLights)
 button.pack()
+
+# window size
 SIZE = 600
 
 canvas = tk.Canvas(root, width = SIZE, height = SIZE, bg = "#FFE19C")
