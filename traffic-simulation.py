@@ -4,8 +4,8 @@ import time
 from threading import Thread
 from Tkinter import *
 
-light1 = False
-light2 = True
+light1 = True
+light2 = False
 
 def changeLights():
     global light1
@@ -20,7 +20,7 @@ button.pack()
 
 # window size
 # lane_width(px) = WIDTH
-WIDTH = 40
+WIDTH = 60
 SIZE = 10 * WIDTH
 
 canvas = tk.Canvas(root, width = SIZE, height = SIZE, bg = "#FFE19C")
@@ -59,12 +59,23 @@ padding = 10
 class Car(Thread, object):
     def __init__(self, spawn, outline = 'blue', fill = 'blue'):
         Thread.__init__(self)
-        pos = self.getPos(spawn)
-        self.rect = canvas.create_rectangle(pos, outline = outline, fill = fill)
+        self.pos = self.getPos(spawn)
+        self._x = 0
+        self._y = 0
+        self.rect = canvas.create_rectangle(self.pos, outline = outline, fill = fill)
         self.speed = (0, 0)
     def move(self):
+        #print canvas.coords(self.rect)
         if(light1):
             canvas.move(self.rect, self.speed[0], self.speed[1])
+            self._x += self.speed[0]
+            self._y += self.speed[1]
+        else:
+            if(abs(self._x) < 3 * WIDTH):
+                # print self._x
+                canvas.move(self.rect, self.speed[0], self.speed[1])
+                self._x += self.speed[0]
+                self._y += self.speed[1]
     def set_speed(self, x, y):
         self.speed = x, y
     def getPos(self, spawn):
@@ -73,21 +84,25 @@ class Car(Thread, object):
             b = 5 * WIDTH + padding
             c = WIDTH
             d = 6 * WIDTH - padding
+            self._x = a
+            self._y = b
             return (a, b, c, d)
         if (spawn == 2):
             a = SIZE
             b = 4 * WIDTH + padding
             c = 9 * WIDTH
             d = 5 * WIDTH - padding
+            self._x = a
+            self._y = b
             return (a, b, c, d)
 
 car1 = Car(1, outline = 'blue', fill = 'blue')
-car1.set_speed(5, 0)
+car1.set_speed(2, 0)
 car2 = Car(2, outline = 'red', fill = 'red')
-car2.set_speed(-5, 0)
+car2.set_speed(-2, 0)
 
 # move cars
-for x in range(2000):
+for x in range(5000):
     time.sleep(0.025)
     car1.move()
     car2.move()
