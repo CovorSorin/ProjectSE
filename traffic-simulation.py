@@ -4,14 +4,12 @@ import time
 from threading import Thread
 from Tkinter import *
 
-light1 = True
-light2 = False
+# horizontal road
+light = True
 
 def changeLights():
-    global light1
-    global light2
-    light1 = not light1
-    light2 = not light2
+    global light
+    light = not light
 
 root = tk.Tk()
 root.title("Traffic Simulation")
@@ -65,17 +63,21 @@ class Car(Thread, object):
         self.rect = canvas.create_rectangle(self.pos, outline = outline, fill = fill)
         self.speed = (0, 0)
     def move(self):
-        #print canvas.coords(self.rect)
-        if(light1):
+        print self._x
+        if(light):
             canvas.move(self.rect, self.speed[0], self.speed[1])
             self._x += self.speed[0]
             self._y += self.speed[1]
         else:
-            if(abs(self._x) < 3 * WIDTH):
-                # print self._x
+            if (abs(self._x) < 180):
                 canvas.move(self.rect, self.speed[0], self.speed[1])
                 self._x += self.speed[0]
                 self._y += self.speed[1]
+            if (abs(self._x) > 190):
+                canvas.move(self.rect, self.speed[0], self.speed[1])
+                self._x += self.speed[0]
+                self._y += self.speed[1]
+
     def set_speed(self, x, y):
         self.speed = x, y
     def getPos(self, spawn):
@@ -102,7 +104,7 @@ car2 = Car(2, outline = 'red', fill = 'red')
 car2.set_speed(-2, 0)
 
 # move cars
-for x in range(5000):
+for x in range(10000):
     time.sleep(0.025)
     car1.move()
     car2.move()
