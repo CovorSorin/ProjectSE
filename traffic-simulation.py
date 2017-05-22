@@ -146,18 +146,18 @@ class Car(Thread, object):
             self._y = b
             return (a, b, c, d)
         if (spawn == 3):
+            c = 5 * WIDTH - padding + 20
             b = SIZE
-            c = 4 * WIDTH + padding
-            d = 1 * WIDTH
-            a = 2 * WIDTH - padding
+            a = 4 * WIDTH + padding + 100
+            d = 1 * WIDTH + 485
             self._x = a
             self._y = b
             return (a, b, c, d)
         if (spawn == 4):
+            a = 5 * WIDTH - padding
             b = 0
             c = 4 * WIDTH + padding
             d = 1 * WIDTH
-            a = 5 * WIDTH - padding
             self._x = a
             self._y = b
             return (a, b, c, d)
@@ -167,7 +167,7 @@ car1.set_speed(2, 0)
 car2 = Car(2, outline = 'red', fill = 'red')
 car2.set_speed(-2, 0)
 car3 = Car(3, outline = 'red', fill = 'red')
-car3.set_speed(-2, 0)
+car3.set_speed(0, -2)
 car4 = Car(4, outline = 'green', fill = 'green')
 car4.set_speed(0, 2)
 
