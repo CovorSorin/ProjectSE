@@ -56,6 +56,7 @@ for t in intersection_lines:
 padding = 10
 class Car(Thread, object):
     def __init__(self, spawn, outline = 'blue', fill = 'blue'):
+        self.spawn = spawn
         Thread.__init__(self)
         self.pos = self.getPos(spawn)
         self._x = 0
@@ -63,20 +64,67 @@ class Car(Thread, object):
         self.rect = canvas.create_rectangle(self.pos, outline = outline, fill = fill)
         self.speed = (0, 0)
     def move(self):
-        print self._x
-        if(light):
-            canvas.move(self.rect, self.speed[0], self.speed[1])
-            self._x += self.speed[0]
-            self._y += self.speed[1]
-        else:
-            if (abs(self._x) < 180):
+        # print self._x
+        if (self.spawn == 1):
+            if(light):
                 canvas.move(self.rect, self.speed[0], self.speed[1])
                 self._x += self.speed[0]
                 self._y += self.speed[1]
-            if (abs(self._x) > 190):
+            else:
+                if (abs(self._x) < 180):
+                    canvas.move(self.rect, self.speed[0], self.speed[1])
+                    self._x += self.speed[0]
+                    self._y += self.speed[1]
+                if (abs(self._x) > 190):
+                    canvas.move(self.rect, self.speed[0], self.speed[1])
+                    self._x += self.speed[0]
+                    self._y += self.speed[1]
+
+        if (self.spawn == 2):
+            if(light):
                 canvas.move(self.rect, self.speed[0], self.speed[1])
                 self._x += self.speed[0]
                 self._y += self.speed[1]
+            else:
+                if (abs(self._x) < 180):
+                    canvas.move(self.rect, self.speed[0], self.speed[1])
+                    self._x += self.speed[0]
+                    self._y += self.speed[1]
+                if (abs(self._x) > 190):
+                    canvas.move(self.rect, self.speed[0], self.speed[1])
+                    self._x += self.speed[0]
+                    self._y += self.speed[1]
+
+
+        if (self.spawn == 3):
+            if(not light):
+                canvas.move(self.rect, self.speed[0], self.speed[1])
+                self._x += self.speed[0]
+                self._y += self.speed[1]
+            else:
+                if (abs(self._y) < 180):
+                    canvas.move(self.rect, self.speed[0], self.speed[1])
+                    self._x += self.speed[0]
+                    self._y += self.speed[1]
+                if (abs(self._y) > 190):
+                    canvas.move(self.rect, self.speed[0], self.speed[1])
+                    self._x += self.speed[0]
+                    self._y += self.speed[1]
+
+        if (self.spawn == 4):
+            if(not light):
+                canvas.move(self.rect, self.speed[0], self.speed[1])
+                self._x += self.speed[0]
+                self._y += self.speed[1]
+            else:
+                if (abs(self._y) < 180):
+                    canvas.move(self.rect, self.speed[0], self.speed[1])
+                    self._x += self.speed[0]
+                    self._y += self.speed[1]
+                if (abs(self._y) > 190):
+                    canvas.move(self.rect, self.speed[0], self.speed[1])
+                    self._x += self.speed[0]
+                    self._y += self.speed[1]
 
     def set_speed(self, x, y):
         self.speed = x, y
@@ -97,17 +145,36 @@ class Car(Thread, object):
             self._x = a
             self._y = b
             return (a, b, c, d)
+        if (spawn == 3):
+            b = SIZE
+            c = 4 * WIDTH + padding
+            d = 9 * WIDTH
+            a = 5 * WIDTH - padding
+            self._x = a
+            self._y = b
+            return (a, b, c, d)
+        if (spawn == 4):
+            b = SIZE
+            c = 4 * WIDTH + padding
+            d = 9 * WIDTH
+            a = 5 * WIDTH - padding
+            self._x = a
+            self._y = b
+            return (a, b, c, d)
 
 car1 = Car(1, outline = 'blue', fill = 'blue')
 car1.set_speed(2, 0)
 car2 = Car(2, outline = 'red', fill = 'red')
 car2.set_speed(-2, 0)
+car4 = Car(4, outline = 'green', fill = 'green')
+car4.set_speed(0, 2)
 
 # move cars
 for x in range(10000):
     time.sleep(0.025)
     car1.move()
     car2.move()
+    car4.move()
     canvas.update()
 
 # start the Simulation
